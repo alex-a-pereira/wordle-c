@@ -1,0 +1,11 @@
+/Debug
+
+# misc
+.DS_Store
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# build related
+build/*.o
+play_wordle
