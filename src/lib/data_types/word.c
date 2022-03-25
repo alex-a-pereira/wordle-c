@@ -10,10 +10,17 @@ WORD* word_init_default(void) {
   pWord = (WORD *)malloc(sizeof(WORD));
 
   if (pWord != NULL) {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < WORD_LEN; i++) {
       *pWord[i] = '*';
     }
   }
 
   return pWord;
+}
+
+void print_word(WORD *word) {
+  for (int i = 0; i < WORD_LEN; i++) {
+    printf("%s", word[i]);
+  }
+  printf("\n");
 }
