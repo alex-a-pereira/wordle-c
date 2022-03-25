@@ -9,3 +9,6 @@
 # build related
 build/*.o
 play_wordle
+
+# dev
+.vscode
