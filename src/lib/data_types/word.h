@@ -6,10 +6,12 @@
 
 typedef void* WORD;
 
-// initialization
+// allocation/memory management
 WORD word_init_default(void);
 WORD word_init_copy_from_other_word(WORD hWordSrc);
 WORD word_init_from_c_string(char * cString);
+
+void word_free_from_memory(WORD * ptrToHWord);
 
 // getters
 int word_get_len(WORD hWord);

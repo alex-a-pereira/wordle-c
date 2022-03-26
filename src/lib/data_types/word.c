@@ -8,6 +8,10 @@ struct word {
 
 typedef struct word Word;
 
+//
+// ALLOCATION / MEMORY MANAGEMENT
+//
+
 /**
  * @brief allocates a Word struct full of '*' char
  * @return void pointer to the Word struct, set to '*****'
@@ -73,6 +77,19 @@ WORD word_init_copy_from_other_word(WORD hWordSrc) {
 
   return pWordCopy;
 }
+
+// destructor
+void word_free_from_memory(WORD * ptrToHWord) {
+  // derefence the pointer to the handle to get the WORD (void ptr)
+  // then cast the WORD (void ptr) to it's true type - a Word struct
+  Word* pWord = (Word*)*ptrToHWord;
+  // de-allocate the char array
+  free(pWord->data);
+  // de-allocate the struct
+  free(pWord);
+  // now we must set value of the the handle to NULL (so existing PTR doesn't point to free'd address)
+  *ptrToHWord = NULL;
+};
 
 // 
 // GETTERS
