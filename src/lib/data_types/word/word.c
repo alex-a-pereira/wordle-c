@@ -81,6 +81,7 @@ void word_free_from_memory(WORD * ptrToHWord) {
   // derefence the pointer to the handle to get the WORD (void ptr)
   // then cast the WORD (void ptr) to it's true type - a Word struct
   Word* pWord = (Word*)*ptrToHWord;
+  // TODO, is this a memory leak?? i dont think so, since we specify the num items when we malloc()
   // de-allocate the char array
   free(pWord->data);
   // de-allocate the struct

@@ -24,6 +24,7 @@ void word_free_from_memory(WORD * ptrToHWord);
 
 // getters
 int word_get_len(WORD hWord);
+// TODO: we probably don't need to expose this as it's implementation specific?
 int word_get_capacity(WORD hWord);
 
 // utils
