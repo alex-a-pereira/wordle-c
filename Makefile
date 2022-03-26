@@ -10,3 +10,7 @@ main: ./src/main.c $(OBJECTS)
 
 ./build/word.o: ./src/lib/data_types/word.c
 	$(CC) $(CFLAGS) -c -o $@ $<
+
+# leave dir in tact
+clean:
+	rm -f play_wordle build/*.o
