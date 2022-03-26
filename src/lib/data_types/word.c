@@ -21,13 +21,32 @@ WORD word_init_default(void) {
     pWord->length = 5;
     pWord->capacity = 5;
 
-    pWord->data = (char *)malloc(sizeof(char) * pWord -> capacity);
+    pWord->data = (char *)malloc(sizeof(char) * pWord->capacity);
     for (int i = 0; i < pWord->capacity; i++) {
       pWord->data[i] = '*';
     }
   }
 
   return pWord;
+}
+
+WORD word_init_copy_from_other_word(WORD hWordSrc) {
+  Word* pWordSrc = (Word*)hWordSrc;
+  // allocate new
+  Word* pWordCopy = NULL;
+  pWordCopy = (Word *)malloc(sizeof(Word));
+
+  if (pWordCopy != NULL) {
+    pWordCopy->capacity = pWordSrc->capacity;
+    pWordCopy->length = pWordSrc->length;
+
+    pWordCopy->data = (char *)malloc(sizeof(char) * pWordCopy->capacity);
+    for (int i = 0; i < pWordCopy->capacity; i++) {
+      pWordCopy->data[i] = pWordSrc->data[i];
+    }
+  }
+
+  return pWordCopy;
 }
 
 // 

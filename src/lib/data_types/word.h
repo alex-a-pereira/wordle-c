@@ -6,7 +6,9 @@
 
 typedef void* WORD;
 
+// initialization
 WORD word_init_default(void);
+WORD word_init_copy_from_other_word(WORD hWordSrc);
 
 // getters
 int word_get_len(WORD hWord);
