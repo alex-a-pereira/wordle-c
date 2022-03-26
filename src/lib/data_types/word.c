@@ -77,10 +77,15 @@ void print_word(WORD hWord) {
   // cast from void pointer to known type
   Word* pWord = (Word*)hWord;
 
+  printf("=== WORD ===\n");
+  printf("len: %i\n", pWord->length);
+  printf("capacity: %i\n", pWord->capacity);
+
   for (int i = 0; i < pWord->length; i++) {
     printf("%c", pWord->data[i]);
   }
   printf("\n");
+  printf("============\n");
 }
 
 int word_get_size(WORD hWord);
