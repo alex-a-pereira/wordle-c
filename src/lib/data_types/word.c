@@ -30,6 +30,25 @@ WORD word_init_default(void) {
   return pWord;
 }
 
+// 
+// GETTERS
+// 
+
+int word_get_len(WORD hWord) {
+  Word* pWord = (Word*)hWord;
+  return pWord->length;
+};
+
+int word_get_capacity(WORD hWord) {
+  Word* pWord = (Word*)hWord;
+  return pWord->capacity;
+};
+
+
+// 
+// UTILS
+// 
+
 /**
  * @brief prints a word from front to back
  * 
@@ -44,3 +63,7 @@ void print_word(WORD hWord) {
   }
   printf("\n");
 }
+
+int word_get_size(WORD hWord);
+
+int word_get_capacity(WORD hWord);
