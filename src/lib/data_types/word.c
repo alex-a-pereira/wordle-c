@@ -1,5 +1,11 @@
 #include "word.h"
 
+typedef struct _word {
+  int length;
+  int capacity;
+  char * data;
+} Word;
+
 //
 // ALLOCATION / MEMORY MANAGEMENT
 //

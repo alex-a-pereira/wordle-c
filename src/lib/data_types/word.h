@@ -4,12 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct _word {
-  int length;
-  int capacity;
-  char * data;
-} Word;
+// Word struct is only used by implementation so it's defined at top of word.c
+// It's added in comments here for convenience of those working on word implementation files
+// typedef struct _word {
+//   int length;
+//   int capacity;
+//   char * data;
+// } Word;
 
+// all consumers interact with a void ptr to set up strong boundaries between modules
 typedef void* WORD;
 
 // allocation/memory management
