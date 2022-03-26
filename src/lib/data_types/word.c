@@ -1,26 +1,46 @@
 #include "word.h"
 
-/**
- * @brief allocates a WORD full of '*' char
- * @return pointer to the WORD set to '*****'
- */
-WORD* word_init_default(void) {
-  WORD* pWord = NULL;
+struct word {
+  int length;
+  int capacity;
+  char * data;
+};
 
-  pWord = (WORD *)malloc(sizeof(WORD));
+typedef struct word Word;
+
+/**
+ * @brief allocates a Word struct full of '*' char
+ * @return void pointer to the Word struct, set to '*****'
+ */
+WORD word_init_default(void) {
+  Word* pWord = NULL;
+
+  pWord = (Word *)malloc(sizeof(Word));
 
   if (pWord != NULL) {
-    for (int i = 0; i < WORD_LEN; i++) {
-      *pWord[i] = '*';
+    pWord->length = 5;
+    pWord->capacity = 5;
+
+    pWord->data = (char *)malloc(sizeof(char) * pWord -> capacity);
+    for (int i = 0; i < pWord->capacity; i++) {
+      pWord->data[i] = '*';
     }
   }
 
   return pWord;
 }
 
-void print_word(WORD *word) {
-  for (int i = 0; i < WORD_LEN; i++) {
-    printf("%s", word[i]);
+/**
+ * @brief prints a word from front to back
+ * 
+ * @param hWord handle to the Word struct
+ */
+void print_word(WORD hWord) {
+  // cast from void pointer to known type
+  Word* pWord = (Word*)hWord;
+
+  for (int i = 0; i < pWord->length; i++) {
+    printf("%c", pWord->data[i]);
   }
   printf("\n");
 }

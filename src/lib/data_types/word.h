@@ -4,12 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define WORD_LEN 5
+typedef void* WORD;
 
-typedef char WORD[WORD_LEN];
+WORD word_init_default(void);
 
-WORD* word_init_default(void);
-
-void print_word(WORD * word);
+void print_word(WORD hWord);
 
 #endif
