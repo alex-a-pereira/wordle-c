@@ -8,7 +8,7 @@ main: ./src/main.c $(OBJECTS)
 ./build/word_bank.o: ./src/lib/word_bank.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-./build/word.o: ./src/lib/data_types/word.c
+./build/word.o: ./src/lib/data_types/word/word.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 # leave dir in tact
