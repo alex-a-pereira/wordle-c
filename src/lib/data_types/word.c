@@ -30,6 +30,31 @@ WORD word_init_default(void) {
   return pWord;
 }
 
+WORD word_init_from_c_string(char * cString) {
+  // first, get the necessary data from the c str argument
+  // for a WORD with 5 chars in it, we have 5 items
+  int lenCStr = 0;
+  while (cString[lenCStr] != '\0') {
+    lenCStr++;
+  }
+
+  // now, allocate the new one
+  Word* pWord = NULL;
+  pWord = (Word *)malloc(sizeof(Word));
+
+  if (pWord != NULL) {
+    pWord->length = lenCStr;
+    pWord->capacity = 5;
+
+    pWord->data = (char *)malloc(sizeof(char) * pWord->capacity);
+    for (int i = 0; i < pWord->capacity; i++) {
+      pWord->data[i] = cString[i];
+    }
+  }
+
+  return pWord;
+}
+
 WORD word_init_copy_from_other_word(WORD hWordSrc) {
   Word* pWordSrc = (Word*)hWordSrc;
   // allocate new
