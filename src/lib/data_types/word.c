@@ -1,13 +1,5 @@
 #include "word.h"
 
-struct word {
-  int length;
-  int capacity;
-  char * data;
-};
-
-typedef struct word Word;
-
 //
 // ALLOCATION / MEMORY MANAGEMENT
 //

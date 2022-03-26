@@ -4,6 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct _word {
+  int length;
+  int capacity;
+  char * data;
+} Word;
+
 typedef void* WORD;
 
 // allocation/memory management
