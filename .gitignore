@@ -11,5 +11,8 @@
 build/*.o
 play_wordle
 
+# test excecutables
+_test*
+
 # dev
 .vscode
