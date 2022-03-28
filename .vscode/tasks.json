@@ -1,0 +1,24 @@
+{
+  "tasks": [
+    {
+      "type": "cppbuild",
+      "label": "make-debug-main",
+      "command": "make",
+      "args": [
+        "debug"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "detail": "run `make debug` in the Makefile which compiles and generates debugging symbols"
+    }
+  ],
+  "version": "2.0.0"
+}
