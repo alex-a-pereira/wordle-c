@@ -62,8 +62,35 @@ void word_vector_free_from_memory(WORD_VECTOR * ptrToHWordVector) {
 // ARRAY METHODS
 //
 
+/**
+ * TODO: we current pass a pointer in here and simply add the pointer to the array
+ *  but do we actually want to make a copy here?
+ *  thinking that the issue would be freeing the vector would make out of scope pointers go NULL
+ *    "out of scope" meaning a WORD initialized in main() would be NULL after calling word_vector_free_from_memory()
+ *    if the WORD was in the word vector
+ */
 void word_vector_push(WORD_VECTOR hWordVector, WORD hWord) {
   WordVector* pWordVector = (WordVector*)hWordVector;
+
+  // resize if length >= capacity
+  if (pWordVector->length >= pWordVector->capacity) {
+    int newCapacity = pWordVector->capacity * 2;
+    printf("WordVector capacity reached - current = %i, new  = %i\n", pWordVector->capacity, newCapacity);
+    // create the new items array. pWordVector->items will be re-assigned to this pointer after copying data in
+    WORD * newItemsArr = (WORD)malloc(sizeof(WORD) * newCapacity);
+
+    // copy the pointers to the existing items in the array to the newItemsArray
+    for (int i = 0; i < pWordVector->length; i++) {
+      newItemsArr[i] = pWordVector->items[i];
+    }
+
+    pWordVector->capacity = newCapacity;
+    // free existing data as items have been moved to newItemsArr
+    free(pWordVector->items);
+    // re-assign the `items` ptr to temp data
+    pWordVector->items = newItemsArr;
+  }
+
   // TODO: need to resize the item array if length => capacity
   int idxOfNewItem = pWordVector->length;
   pWordVector->length = idxOfNewItem + 1;
