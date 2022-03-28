@@ -97,6 +97,17 @@ void word_vector_push(WORD_VECTOR hWordVector, WORD hWord) {
   pWordVector->items[idxOfNewItem] = hWord;
 }
 
+int word_vector_get_length(WORD_VECTOR hWordVector) {
+  WordVector* pWordVector = (WordVector*)hWordVector;
+  return pWordVector->length;
+}
+
+// TODO: safe access? or just allow segfault? lol
+WORD word_vector_at(WORD_VECTOR hWordVector, int idx) {
+  WordVector* pWordVector = (WordVector*)hWordVector;
+  return pWordVector->items[idx];
+}
+
 
 //
 // UTILS
