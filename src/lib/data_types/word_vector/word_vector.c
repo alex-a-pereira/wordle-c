@@ -45,7 +45,9 @@ void word_vector_free_from_memory(WORD_VECTOR * ptrToHWordVector) {
 
   // free each word in the vector from memory
   for (int i = 0; i < pWordVector->length; i++) {
-    word_free_from_memory(pWordVector->items[i]);
+    WORD wordToFree = pWordVector->items[i];
+    // pass in the ADDRESS of the pointer to the word
+    word_free_from_memory(&wordToFree);
   }
   
   // free the array of pointers from memory
@@ -54,4 +56,31 @@ void word_vector_free_from_memory(WORD_VECTOR * ptrToHWordVector) {
   free(pWordVector);
   // set the value of the address passed as an argument to NULL
   *ptrToHWordVector = NULL;
+}
+
+//
+// ARRAY METHODS
+//
+
+void word_vector_push(WORD_VECTOR hWordVector, WORD hWord) {
+  WordVector* pWordVector = (WordVector*)hWordVector;
+  // TODO: need to resize the item array if length => capacity
+  int idxOfNewItem = pWordVector->length;
+  pWordVector->length = idxOfNewItem + 1;
+  pWordVector->items[idxOfNewItem] = hWord;
+}
+
+
+//
+// UTILS
+//
+
+void print_word_vector(WORD_VECTOR hWordVector) {
+  WordVector* pWordVector = (WordVector*)hWordVector;
+
+  printf("++++ WORD VECTOR ++++\n");
+  for (int i = 0; i < pWordVector->length; i++) {
+    WORD wordToPrint = pWordVector->items[i];
+    print_word(wordToPrint);
+  }
 }
