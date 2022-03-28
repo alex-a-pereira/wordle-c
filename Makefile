@@ -2,10 +2,10 @@
 CC=gcc
 CFLAGS=-Wall --std=c99 
 # RUN FLAGS
-OBJECTS=./build/word.o ./build/word_vector.o ./build/word_bank.o
+OBJECTS=./build/word.o ./build/word_vector.o ./build/word_bank.o ./build/game_state.o
 # DEBUG FLAGS
 CFLAGS_DEBUG=$(CFLAGS) -g
-DEBUG_OBJECTS=./build_debug/word.o ./build_debug/word_vector.o ./build_debug/word_bank.o
+DEBUG_OBJECTS=./build_debug/word.o ./build_debug/word_vector.o ./build_debug/word_bank.o ./build_debug/game_state.o
 
 # RUN
 all: main
@@ -21,6 +21,9 @@ main: ./src/main.c $(OBJECTS)
 ./build/word_bank.o: ./src/lib/word_bank/word_bank.c
 	$(CC) $(CFLAGS) -g -c -o $@ $<
 
+./build/game_state.o: ./src/game_state/game_state.c
+	$(CC) $(CFLAGS) -g -c -o $@ $<
+
 # DEBUG
 debug: ./src/main.c $(OBJECTS)
 	$(CC) $(CFLAGS_DEBUG) ./src/main.c $(OBJECTS) -o play_wordle__debug
@@ -32,6 +35,9 @@ debug: ./src/main.c $(OBJECTS)
 	$(CC) $(CFLAGS_DEBUG) -g -c -o $@ $<
 
 ./build_debug/word_bank.o: ./src/lib/word_bank/word_bank.c
+	$(CC) $(CFLAGS_DEBUG) -g -c -o $@ $<
+
+./build_debug/game_state.o: ./src/game_state/game_state.c
 	$(CC) $(CFLAGS_DEBUG) -g -c -o $@ $<
 
 # TESTS
