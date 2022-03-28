@@ -38,11 +38,18 @@ WORD_VECTOR parse_word_bank_into_vector(void) {
 
 WORD select_random_word(void) {
   WORD_VECTOR allWords = parse_word_bank_into_vector();
+  WORD selectedWord = NULL;
+  WORD selectedWordCopy = NULL;
 
+  // get random selection
   int minIdx = 0;
   int maxIdx = word_vector_get_length(allWords);
-
   int randIdx = (rand() % (maxIdx - minIdx + 1)) + 1;
+  selectedWord = word_vector_at(allWords, randIdx);
+  // copy into a new pointer so we can free the vector safely
+  selectedWordCopy = word_init_copy_from_other_word(selectedWord);
+  // cleanup the temp vector
+  word_vector_free_from_memory(&allWords);
 
-  return word_vector_at(allWords, randIdx);
+  return selectedWordCopy;
 }
