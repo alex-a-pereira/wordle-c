@@ -97,6 +97,14 @@ void word_append_char(WORD hWord, char charToAppend) {
   pWord->data[idxOfNewItem] = charToAppend;
 } 
 
+void word_pop_char(WORD hWord) {
+  Word* pWord = (Word*)hWord;
+  // if length is already 0, this is a no-op
+  if (pWord->length == 0) { return; }
+  // don't need to actually modify memory
+  pWord->length = pWord->length - 1; 
+}
+
 // destructor
 void word_free_from_memory(WORD * ptrToHWord) {
   // derefence the pointer to the handle to get the WORD (void ptr)
