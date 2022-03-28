@@ -10,23 +10,16 @@ typedef struct _word {
 // ALLOCATION / MEMORY MANAGEMENT
 //
 
-/**
- * @brief allocates a Word struct full of '*' char
- * @return void pointer to the Word struct, set to '*****'
- */
 WORD word_init_default(void) {
   Word* pWord = NULL;
 
   pWord = (Word *)malloc(sizeof(Word));
 
   if (pWord != NULL) {
-    pWord->length = 5;
-    pWord->capacity = 5;
+    pWord->length = 0;
+    pWord->capacity = 8;
 
     pWord->data = (char *)malloc(sizeof(char) * pWord->capacity);
-    for (int i = 0; i < pWord->capacity; i++) {
-      pWord->data[i] = '*';
-    }
   }
 
   return pWord;
@@ -46,7 +39,7 @@ WORD word_init_from_c_string(char * cString) {
 
   if (pWord != NULL) {
     pWord->length = lenCStr;
-    pWord->capacity = 5;
+    pWord->capacity = lenCStr;
 
     pWord->data = (char *)malloc(sizeof(char) * pWord->capacity);
     for (int i = 0; i < pWord->capacity; i++) {
@@ -75,6 +68,34 @@ WORD word_init_copy_from_other_word(WORD hWordSrc) {
 
   return pWordCopy;
 }
+
+//
+// STRING METHODS
+//
+
+void word_append_char(WORD hWord, char charToAppend) {
+  Word* pWord = (Word*)hWord;
+
+  // resize to double capacity
+  if (pWord->length >= pWord-> capacity) {
+    int newCapacity = pWord->capacity * 2;
+    printf("Word capacity reached - current = %i, new  = %i\n", pWord->capacity, newCapacity);
+
+    char * newDataArr = (char *)malloc(sizeof(char) * newCapacity);
+
+    for (int i = 0; i < pWord->length; i++) {
+      newDataArr[i] = pWord->data[i];
+    }
+
+    pWord->capacity = newCapacity;
+    free(pWord->data);
+    pWord->data = newDataArr;
+  }
+
+  int idxOfNewItem = pWord->length;
+  pWord->length++;
+  pWord->data[idxOfNewItem] = charToAppend;
+} 
 
 // destructor
 void word_free_from_memory(WORD * ptrToHWord) {

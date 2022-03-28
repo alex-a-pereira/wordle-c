@@ -2,19 +2,24 @@
 #include "lib/data_types/word_vector/word_vector.h"
 
 int main(int argc, char ** argv) {
-  WORD_VECTOR myWordVector = word_vector_init_default();
+  FILE* fp = fopen("./src/lib/word_bank/wordbank.txt", "r");
 
   // add a few default words to the vector
-  WORD myWord = NULL;
-  for (int i = 0; i < 10; i++) {
-    myWord = word_init_default();
-    word_vector_push(myWordVector, myWord);
-    myWord = NULL;
+  // WORD myWord = word_extract_from_file(fp);
+  // WORD myWord1 = word_extract_from_file(fp);
+  WORD myWord = word_init_from_c_string("ALEX");
+
+  for (int i = 1; i < 10; i++) {
+    word_append_char(myWord, '!');
   }
 
-  print_word_vector(myWordVector);
+  WORD myWord1 = word_init_from_c_string("hjksdfhjksdfhjksdfhkjsdfhkj");
 
-  word_vector_free_from_memory(&myWordVector);
+  print_word(myWord);
+  print_word(myWord1);
+
+  word_free_from_memory(&myWord);
+  word_free_from_memory(&myWord1);
 
   return 0;
 }
