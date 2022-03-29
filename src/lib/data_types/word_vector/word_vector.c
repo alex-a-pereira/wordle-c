@@ -75,7 +75,6 @@ void word_vector_push(WORD_VECTOR hWordVector, WORD hWord) {
   // resize if length >= capacity
   if (pWordVector->length >= pWordVector->capacity) {
     int newCapacity = pWordVector->capacity * 2;
-    printf("WordVector capacity reached - current = %i, new  = %i\n", pWordVector->capacity, newCapacity);
     // create the new items array. pWordVector->items will be re-assigned to this pointer after copying data in
     WORD * newItemsArr = (WORD)malloc(sizeof(WORD) * newCapacity);
 
