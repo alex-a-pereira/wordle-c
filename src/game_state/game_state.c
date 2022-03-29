@@ -70,7 +70,6 @@ void game_state_on_char_press(char c) {
   if (curLen >= 5) { return; }
 
   word_append_char(globalGameState.currentGuessWord, guess);
-  word_append_char(globalGameState.alreadyGuessedChars, guess);
 }
 
 // user presses backspace -> pop from current guess if able to
