@@ -1,5 +1,7 @@
+# debug
 /Debug
 *.dSYM
+play_wordle__debug
 
 # misc
 .DS_Store
@@ -11,5 +13,11 @@
 build/*.o
 play_wordle
 
-# dev
-.vscode
+# test excecutables
+_test*
+
+# dev - we're committing the run/debug config files for vscode that
+# are relevent to the PROJECT, not a developer's settings
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
