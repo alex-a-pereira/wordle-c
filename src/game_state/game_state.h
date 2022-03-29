@@ -9,9 +9,13 @@
 typedef void* GAME_STATE;
 
 // init/memory management
-GAME_STATE game_state_init_default(void);
-void game_state_destroy(GAME_STATE* ptrToHGameState);
+void game_state_init(void);
+void game_state_destroy(void);
 
-// getters
+/**
+ * UTILS
+ */
+
+void print_game_state(void);
 
 #endif

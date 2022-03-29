@@ -11,30 +11,33 @@ typedef struct _gameState {
   WORD currentGuessWord;
 } GameState;
 
+GameState globalGameState;
 
+//
+// INIT/memory management
+//
 
-GAME_STATE game_state_init_default(void) {
-  GameState* pGameState = NULL;
-  pGameState = (GameState*)malloc(sizeof(GameState));
-
-  pGameState->maxNumGuesses = 6;
-  pGameState->chosenWordToGuess = select_random_word();
-  pGameState->numGuessesTaken = 0;
-  pGameState->alreadyGuessedWords = word_vector_init_default();
-  pGameState->currentGuessWord = word_init_default();
-
-  return pGameState;
+void game_state_init(void) {
+  globalGameState.maxNumGuesses = 6;
+  globalGameState.chosenWordToGuess = select_random_word();
+  globalGameState.numGuessesTaken = 0;
+  globalGameState.alreadyGuessedWords = word_vector_init_default();
+  globalGameState.currentGuessWord = word_init_default();
 }
 
-void game_state_destroy(GAME_STATE* ptrToHGameState) {
-  GameState* pGameState = (GameState*)*ptrToHGameState;
+void game_state_destroy(void) {
   // free WORDs in state
-  word_free_from_memory(&pGameState->chosenWordToGuess);
-  word_free_from_memory(&pGameState->currentGuessWord);
+  word_free_from_memory(&globalGameState.chosenWordToGuess);
+  word_free_from_memory(&globalGameState.currentGuessWord);
   // free WORD_VECTORs in state
-  word_vector_free_from_memory(&pGameState->alreadyGuessedWords);
-  // free stack memory
-  free(pGameState);
+  word_vector_free_from_memory(&globalGameState.alreadyGuessedWords);
   // set the pointer to NULL to avoid junk value
-  *ptrToHGameState = NULL;
+}
+
+//
+// UTILS
+//
+
+void print_game_state(void) {
+  print_word(globalGameState.chosenWordToGuess);
 }
