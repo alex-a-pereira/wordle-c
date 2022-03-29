@@ -74,7 +74,7 @@ void game_state_on_char_press(char c) {
 
 // user presses backspace -> pop from current guess if able to
 void game_state_on_backspace(void) {
-  
+  word_pop_char(globalGameState.currentGuessWord);
 }
 // user presses "enter" -> add current guess to word bank if able to
 void game_state_on_submit(void) {
