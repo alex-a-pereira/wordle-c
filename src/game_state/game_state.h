@@ -8,9 +8,24 @@
 
 typedef void* GAME_STATE;
 
+// TODO: move to a `globals` module as it's needed for validating words
+// when pulling them out of t
+// const int WORD_LENGTH = 5;
+
 // init/memory management
 void game_state_init(void);
 void game_state_destroy(void);
+
+/**
+ * USER INPUT HANDLERS
+ */
+
+// user presses an alpha char -> append to current guess if able to
+void game_state_on_char_press(char guess);
+// user presses backspace -> pop from current guess if able to
+void game_state_on_backspace(void);
+// user presses "enter" -> add current guess to word bank if able to
+void game_state_on_submit(void);
 
 /**
  * UTILS
