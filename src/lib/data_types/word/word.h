@@ -25,6 +25,8 @@ void word_free_from_memory(WORD * ptrToHWord);
 // string methods
 void word_append_char(WORD hWord, char charToAppend);
 void word_pop_char(WORD hWord);
+// TODO: boolean
+int word_includes(WORD hWord, char c);
 
 // getters
 int word_get_len(WORD hWord);

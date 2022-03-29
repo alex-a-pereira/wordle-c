@@ -105,6 +105,14 @@ void word_pop_char(WORD hWord) {
   pWord->length = pWord->length - 1; 
 }
 
+int word_includes(WORD hWord, char c) {
+  Word* pWord = (Word*)hWord;
+  for (int i = 0; i < pWord->length; i++) {
+    if (pWord->data[i] == c) { return 1; }
+  }
+  return 0;
+}
+
 // destructor
 void word_free_from_memory(WORD * ptrToHWord) {
   // derefence the pointer to the handle to get the WORD (void ptr)
