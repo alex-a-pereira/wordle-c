@@ -113,6 +113,12 @@ int word_includes(WORD hWord, char c) {
   return 0;
 }
 
+// TODO: safe access? or just allow segfault? lol
+char word_at_idx(WORD hWord, int idx) {
+  Word* pWord = (Word*)hWord;
+  return pWord->data[idx];
+}
+
 // destructor
 void word_free_from_memory(WORD * ptrToHWord) {
   // derefence the pointer to the handle to get the WORD (void ptr)

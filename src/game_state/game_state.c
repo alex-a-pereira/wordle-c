@@ -25,10 +25,12 @@ void game_state_init(void) {
 }
 
 void game_state_destroy(void) {
-
+  // reset int
+  globalGameState.maxNumGuesses = 0;
   // free WORDs in state
   word_free_from_memory(&globalGameState.chosenWordToGuess);
   word_free_from_memory(&globalGameState.currentGuessWord);
+  word_free_from_memory(&globalGameState.alreadyGuessedChars);
   // free WORD_VECTORs in state
   word_vector_free_from_memory(&globalGameState.alreadyGuessedWords);
   // set the pointer to NULL to avoid junk value
@@ -62,6 +64,20 @@ void reset_current_guess_word(void) {
 
 int get_num_guesses_taken(void) {
   return word_vector_get_length(globalGameState.alreadyGuessedWords);
+}
+
+// NOTE: the implementation doesn't account for "if already guessed, dont add it"
+// so there will be duplicates in alreadyGuessedChars, e.g. if user submits `audio` and
+// then `raids`, already guessed chars will be `audioraids`. This is OK performance wise
+// as the max len is tiny, (maxNumGuesses * word length, i.e. 6 * 5 = 30)
+void add_submitted_chars_to_already_guessed_charts() {
+  int curLen = word_get_len(globalGameState.currentGuessWord);
+  for (int i = 0; i < curLen; i++) {
+    char charAtIdx = word_at_idx(globalGameState.currentGuessWord, i);
+    word_append_char(
+      globalGameState.alreadyGuessedChars, charAtIdx
+    );
+  }
 }
 
 /**
@@ -108,6 +124,8 @@ void game_state_on_submit(void) {
     globalGameState.alreadyGuessedWords,
     globalGameState.currentGuessWord
   );
+
+  add_submitted_chars_to_already_guessed_charts();
 
   // it's safe to modify globalGameState.currentGuessWord pointer
   // as described above
