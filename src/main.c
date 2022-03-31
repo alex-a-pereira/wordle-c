@@ -1,25 +1,23 @@
 #include <stdio.h>
-#include "lib/data_types/word_vector/word_vector.h"
+
+#include "game_state/game_state.h"
 
 int main(int argc, char ** argv) {
-  FILE* fp = fopen("./src/lib/word_bank/wordbank.txt", "r");
+  game_state_init();
 
-  // add a few default words to the vector
-  // WORD myWord = word_extract_from_file(fp);
-  // WORD myWord1 = word_extract_from_file(fp);
-  WORD myWord = word_init_from_c_string("ALEX");
+  game_state_on_char_press('a');
+  game_state_on_char_press('l');
+  game_state_on_char_press('e');
+  game_state_on_char_press('x');
 
-  for (int i = 1; i < 10; i++) {
-    word_append_char(myWord, '!');
-  }
+  game_state_on_char_press(' ');
+  game_state_on_backspace();
 
-  WORD myWord1 = word_init_from_c_string("hjksdfhjksdfhjksdfhkjsdfhkj");
+  game_state_on_char_press('i');
 
-  print_word(myWord);
-  print_word(myWord1);
+  game_state_on_submit();
 
-  word_free_from_memory(&myWord);
-  word_free_from_memory(&myWord1);
-
+  print_game_state();
+  game_state_destroy();
   return 0;
 }

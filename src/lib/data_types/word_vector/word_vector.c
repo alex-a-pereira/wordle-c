@@ -75,7 +75,6 @@ void word_vector_push(WORD_VECTOR hWordVector, WORD hWord) {
   // resize if length >= capacity
   if (pWordVector->length >= pWordVector->capacity) {
     int newCapacity = pWordVector->capacity * 2;
-    printf("WordVector capacity reached - current = %i, new  = %i\n", pWordVector->capacity, newCapacity);
     // create the new items array. pWordVector->items will be re-assigned to this pointer after copying data in
     WORD * newItemsArr = (WORD)malloc(sizeof(WORD) * newCapacity);
 
@@ -91,10 +90,15 @@ void word_vector_push(WORD_VECTOR hWordVector, WORD hWord) {
     pWordVector->items = newItemsArr;
   }
 
-  // TODO: need to resize the item array if length => capacity
   int idxOfNewItem = pWordVector->length;
   pWordVector->length = idxOfNewItem + 1;
-  pWordVector->items[idxOfNewItem] = hWord;
+
+  // create a NEW word to append to the vector
+  // we do this as any item in the array should not rely on
+  // and instance initialized out of scope
+  WORD copyOfHWord = word_init_copy_from_other_word(hWord);
+
+  pWordVector->items[idxOfNewItem] = copyOfHWord;
 }
 
 int word_vector_get_length(WORD_VECTOR hWordVector) {
@@ -120,5 +124,6 @@ void print_word_vector(WORD_VECTOR hWordVector) {
   for (int i = 0; i < pWordVector->length; i++) {
     WORD wordToPrint = pWordVector->items[i];
     print_word(wordToPrint);
+    printf("\n");
   }
 }

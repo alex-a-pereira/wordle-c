@@ -105,6 +105,20 @@ void word_pop_char(WORD hWord) {
   pWord->length = pWord->length - 1; 
 }
 
+int word_includes(WORD hWord, char c) {
+  Word* pWord = (Word*)hWord;
+  for (int i = 0; i < pWord->length; i++) {
+    if (pWord->data[i] == c) { return 1; }
+  }
+  return 0;
+}
+
+// TODO: safe access? or just allow segfault? lol
+char word_at_idx(WORD hWord, int idx) {
+  Word* pWord = (Word*)hWord;
+  return pWord->data[idx];
+}
+
 // destructor
 void word_free_from_memory(WORD * ptrToHWord) {
   // derefence the pointer to the handle to get the WORD (void ptr)
@@ -146,16 +160,9 @@ int word_get_capacity(WORD hWord) {
 void print_word(WORD hWord) {
   // cast from void pointer to known type
   Word* pWord = (Word*)hWord;
-
-  printf("=== WORD ===\n");
-  printf("len: %i\n", pWord->length);
-  printf("capacity: %i\n", pWord->capacity);
-
   for (int i = 0; i < pWord->length; i++) {
     printf("%c", pWord->data[i]);
   }
-  printf("\n");
-  printf("============\n");
 }
 
 int word_get_size(WORD hWord);
