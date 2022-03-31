@@ -12,6 +12,8 @@ int main(int argc, char ** argv) {
   game_state_on_char_press(' ');
   game_state_on_char_press('i');
 
+  game_state_on_submit();
+
   print_game_state();
   game_state_destroy();
   return 0;

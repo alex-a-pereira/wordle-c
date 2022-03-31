@@ -56,6 +56,12 @@ char alphaToUpper (char c) {
   return charAsUpper;
 }
 
+// clears out the current guess to an empty WORD
+void reset_current_guess_word(void) {
+  word_free_from_memory(&globalGameState.currentGuessWord);
+  globalGameState.currentGuessWord = word_init_default();
+}
+
 /**
  * USER INPUT HANDLERS
  */
@@ -76,9 +82,25 @@ void game_state_on_char_press(char c) {
 void game_state_on_backspace(void) {
   word_pop_char(globalGameState.currentGuessWord);
 }
+
 // user presses "enter" -> add current guess to word bank if able to
 void game_state_on_submit(void) {
-  
+  int curLen = word_get_len(globalGameState.currentGuessWord);
+  if (curLen != 5) {
+    return;
+  }
+
+  // push the guess onto the vector. the function COPIES currentGuessWord,
+  // so currentGuessWord can be modified after pushing worrying about
+  // modifying the item in the array
+  word_vector_push(
+    globalGameState.alreadyGuessedWords,
+    globalGameState.currentGuessWord
+  );
+
+  // it's safe to modify globalGameState.currentGuessWord pointer
+  // as described above
+  reset_current_guess_word();
 }
 
 //
@@ -94,6 +116,9 @@ void print_game_state(void) {
 
   printf("\nAlready guessed chars: ");
   print_word(globalGameState.alreadyGuessedChars);
+
+  printf("\nAlready guessed words:\n");
+  print_word_vector(globalGameState.alreadyGuessedWords);
 
   printf("\n");
 }
