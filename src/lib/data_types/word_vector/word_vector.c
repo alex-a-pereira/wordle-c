@@ -90,10 +90,15 @@ void word_vector_push(WORD_VECTOR hWordVector, WORD hWord) {
     pWordVector->items = newItemsArr;
   }
 
-  // TODO: need to resize the item array if length => capacity
   int idxOfNewItem = pWordVector->length;
   pWordVector->length = idxOfNewItem + 1;
-  pWordVector->items[idxOfNewItem] = hWord;
+
+  // create a NEW word to append to the vector
+  // we do this as any item in the array should not rely on
+  // and instance initialized out of scope
+  WORD copyOfHWord = word_init_copy_from_other_word(hWord);
+
+  pWordVector->items[idxOfNewItem] = copyOfHWord;
 }
 
 int word_vector_get_length(WORD_VECTOR hWordVector) {
