@@ -1,23 +1,17 @@
 #include <stdio.h>
 
+#include "user_interface/user_interface.h"
 #include "game_state/game_state.h"
 
+#include <unistd.h>
+
 int main(int argc, char ** argv) {
-  game_state_init();
+  init_ui();
 
-  game_state_on_char_press('a');
-  game_state_on_char_press('l');
-  game_state_on_char_press('e');
-  game_state_on_char_press('x');
+  while (1) {
+    print_ui();
+  }
 
-  game_state_on_char_press(' ');
-  game_state_on_backspace();
-
-  game_state_on_char_press('i');
-
-  game_state_on_submit();
-
-  print_game_state();
-  game_state_destroy();
+  destroy_ui();
   return 0;
 }
