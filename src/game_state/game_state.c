@@ -75,6 +75,11 @@ void game_state_on_char_press(char c) {
   // TODO: global instead of magic number
   if (curLen >= 5) { return; }
 
+  int numGuesses = word_vector_get_length(globalGameState.alreadyGuessedWords);
+  if (numGuesses >= globalGameState.maxNumGuesses) {
+    return;
+  }
+
   word_append_char(globalGameState.currentGuessWord, guess);
 }
 
@@ -85,8 +90,14 @@ void game_state_on_backspace(void) {
 
 // user presses "enter" -> add current guess to word bank if able to
 void game_state_on_submit(void) {
-  int curLen = word_get_len(globalGameState.currentGuessWord);
-  if (curLen != 5) {
+  int lenOfCurrentWord = word_get_len(globalGameState.currentGuessWord);
+  if (lenOfCurrentWord != 5) {
+    return;
+  }
+
+  // can't guess if we've already exceeded max num guesses
+  int numGuesses = word_vector_get_length(globalGameState.alreadyGuessedWords);
+  if (numGuesses >= globalGameState.maxNumGuesses) {
     return;
   }
 

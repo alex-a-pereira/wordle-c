@@ -124,5 +124,6 @@ void print_word_vector(WORD_VECTOR hWordVector) {
   for (int i = 0; i < pWordVector->length; i++) {
     WORD wordToPrint = pWordVector->items[i];
     print_word(wordToPrint);
+    printf("\n");
   }
 }
