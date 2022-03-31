@@ -41,8 +41,8 @@ debug: ./src/main.c $(OBJECTS)
 	$(CC) $(CFLAGS_DEBUG) -g -c -o $@ $<
 
 # TESTS
-test_word: ./tests/test_word.c $(OBJECTS)
-	$(CC) $(CFLAGS) ./tests/test_word.c $(OBJECTS) -o _test_word
+test_game_state: ./tests/test_game_state.c $(OBJECTS)
+	$(CC) $(CFLAGS) ./tests/test_game_state.c $(OBJECTS) -o _test_game_state
 
 # leave dir in tact
 clean:
