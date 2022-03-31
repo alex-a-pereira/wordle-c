@@ -5,8 +5,6 @@ typedef struct _gameState {
   WORD alreadyGuessedChars;
   // the random word that the user should guess
   WORD chosenWordToGuess;
-  // what has the user already done?
-  int numGuessesTaken;
   WORD_VECTOR alreadyGuessedWords;
   // what is the user currently doing?
   WORD currentGuessWord;
@@ -21,13 +19,13 @@ GameState globalGameState;
 void game_state_init(void) {
   globalGameState.maxNumGuesses = 6;
   globalGameState.chosenWordToGuess = select_random_word();
-  globalGameState.numGuessesTaken = 0;
   globalGameState.alreadyGuessedWords = word_vector_init_default();
   globalGameState.alreadyGuessedChars = word_init_default();
   globalGameState.currentGuessWord = word_init_default();
 }
 
 void game_state_destroy(void) {
+
   // free WORDs in state
   word_free_from_memory(&globalGameState.chosenWordToGuess);
   word_free_from_memory(&globalGameState.currentGuessWord);
@@ -62,6 +60,10 @@ void reset_current_guess_word(void) {
   globalGameState.currentGuessWord = word_init_default();
 }
 
+int get_num_guesses_taken(void) {
+  return word_vector_get_length(globalGameState.alreadyGuessedWords);
+}
+
 /**
  * USER INPUT HANDLERS
  */
@@ -75,8 +77,7 @@ void game_state_on_char_press(char c) {
   // TODO: global instead of magic number
   if (curLen >= 5) { return; }
 
-  int numGuesses = word_vector_get_length(globalGameState.alreadyGuessedWords);
-  if (numGuesses >= globalGameState.maxNumGuesses) {
+  if (get_num_guesses_taken() >= globalGameState.maxNumGuesses) {
     return;
   }
 
@@ -96,8 +97,7 @@ void game_state_on_submit(void) {
   }
 
   // can't guess if we've already exceeded max num guesses
-  int numGuesses = word_vector_get_length(globalGameState.alreadyGuessedWords);
-  if (numGuesses >= globalGameState.maxNumGuesses) {
+  if (get_num_guesses_taken() >= globalGameState.maxNumGuesses) {
     return;
   }
 
