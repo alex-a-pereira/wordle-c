@@ -28,6 +28,12 @@ void game_state_on_backspace(void);
 void game_state_on_submit(void);
 
 /**
+ * GETTERS
+ */
+
+char get_current_guess_char(int idx);
+
+/**
  * UTILS
  */
 

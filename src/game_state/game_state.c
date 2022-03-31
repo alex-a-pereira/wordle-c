@@ -133,6 +133,16 @@ void game_state_on_submit(void) {
 }
 
 //
+// GETTERS
+//
+
+char get_current_guess_char(int idx) {
+  int curLen = word_get_len(globalGameState.currentGuessWord);
+  if (idx > curLen - 1) { return '\0'; }
+  return word_at_idx(globalGameState.currentGuessWord, idx);
+}
+
+//
 // UTILS
 //
 

@@ -14,7 +14,10 @@ void print_previous_guesses(void) {
 }
 
 void print_current_guess(void) {
-  printw("RAT__\n");
+  for (int i = 0; i < 5; i++) {
+    printw("%c", get_current_guess_char(i));
+  }
+  printw("\n");
 }
 
 void print_ui(void) {

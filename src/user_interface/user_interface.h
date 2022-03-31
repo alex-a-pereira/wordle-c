@@ -2,9 +2,10 @@
 #define USER_INTERFACE_H
 
 #include <ncurses.h>
+#include "../game_state/game_state.h"
 
-void init_ui();
-void destroy_ui();
+void init_ui(void);
+void destroy_ui(void);
 
 void print_ui(void);
 
