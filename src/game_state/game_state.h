@@ -39,7 +39,7 @@ char get_current_guess_char(int idx);
 // getter used to print chars of previous guesses
 int get_previous_guesses_len(void);
 int get_len_of_previous_guess(int previousGuessIdx);
-char get_previous_guess_char(int previousGuessIdx, int wordIdx);
+char get_previous_guess_char(int previousGuessIdx, int idxOfCharInWord);
 
 /**
  * UTILS

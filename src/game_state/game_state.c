@@ -156,15 +156,15 @@ char get_current_guess_char(int idx) {
   return word_at_idx(globalGameState.currentGuessWord, idx);
 }
 
-char get_previous_guess_char(int previousGuessIdx, int wordIdx) {
+char get_previous_guess_char(int previousGuessIdx, int idxOfCharInWord) {
   int lenOfPreviousGuesses = word_vector_get_length(globalGameState.alreadyGuessedWords);
   if (previousGuessIdx > lenOfPreviousGuesses - 1) { return '\0'; }
 
   WORD previousGuessAtIdx = word_vector_at(globalGameState.alreadyGuessedWords, previousGuessIdx);
   int lenOfPreviousGuessWord = word_get_len(previousGuessAtIdx);
-  if (wordIdx > lenOfPreviousGuessWord - 1) { return '\0'; }
+  if (idxOfCharInWord > lenOfPreviousGuessWord - 1) { return '\0'; }
 
-  return word_at_idx(previousGuessAtIdx, wordIdx);
+  return word_at_idx(previousGuessAtIdx, idxOfCharInWord);
 }
 
 int get_previous_guesses_len(void) {
