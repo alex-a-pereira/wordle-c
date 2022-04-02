@@ -9,8 +9,6 @@ int main(int argc, char ** argv) {
   game_state_init();
   init_ui();
 
-  int i = 0;
-
   while (1) {
     ui_get_input();
     print_ui();

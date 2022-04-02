@@ -34,7 +34,6 @@ void print_yellow_char(char c) {
 
 void print_previous_guesses(void) {
   int numWordsToPrint = get_previous_guesses_len();
-  int currWordToPrintLen;
 
   for (int idxOfWordToPrint = 0; idxOfWordToPrint < numWordsToPrint; idxOfWordToPrint++) {
     int currWordToPrintLen = get_len_of_previous_guess(idxOfWordToPrint);
