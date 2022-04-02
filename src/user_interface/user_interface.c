@@ -1,14 +1,35 @@
 #include "user_interface.h"
 
+#define BACKGROUND_COLOR 0
+#define GREEN_COLOR_PAIR_ATTR 2
+#define YELLOW_COLOR_PAIR_ATTR 3
+
 void init_ui(void) {
   initscr();			/* Start curses mode 		  */
   timeout(3000);
   noecho();
   curs_set(0);
+  start_color();
+  init_pair(1, COLOR_WHITE, BACKGROUND_COLOR);
+  // 
+  init_pair(GREEN_COLOR_PAIR_ATTR, COLOR_GREEN, BACKGROUND_COLOR);
+  init_pair(YELLOW_COLOR_PAIR_ATTR, COLOR_YELLOW, BACKGROUND_COLOR);
 }
 
 void destroy_ui(void) {
   endwin();
+}
+
+void print_green_char(char c) {
+  attron(COLOR_PAIR(GREEN_COLOR_PAIR_ATTR));
+  printw("%c", c);
+  attroff(COLOR_PAIR(GREEN_COLOR_PAIR_ATTR));
+}
+
+void print_yellow_char(char c) {
+  attron(COLOR_PAIR(YELLOW_COLOR_PAIR_ATTR));
+  printw("%c", c);
+  attroff(COLOR_PAIR(YELLOW_COLOR_PAIR_ATTR));
 }
 
 void print_previous_guesses(void) {
@@ -19,7 +40,13 @@ void print_previous_guesses(void) {
     int currWordToPrintLen = get_len_of_previous_guess(idxOfWordToPrint);
     for (int idxOfCharInWord = 0; idxOfCharInWord < currWordToPrintLen; idxOfCharInWord++) {
       char charAtGuessIdx = get_previous_guess_char(idxOfWordToPrint, idxOfCharInWord);
-      printw("%c", charAtGuessIdx);
+      if (charAtGuessIdx == 'A') {
+        print_green_char('A');
+      } else if (charAtGuessIdx == 'S') {
+        print_yellow_char('S');
+      } else {
+        printw("%c", charAtGuessIdx);
+      }
     }
     printw("\n");
   }
