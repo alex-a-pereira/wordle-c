@@ -9,4 +9,6 @@ void destroy_ui(void);
 
 void print_ui(void);
 
+void ui_get_input(void);
+
 #endif

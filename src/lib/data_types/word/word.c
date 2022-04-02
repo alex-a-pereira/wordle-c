@@ -79,7 +79,7 @@ void word_append_char(WORD hWord, char charToAppend) {
   // resize to double capacity
   if (pWord->length >= pWord-> capacity) {
     int newCapacity = pWord->capacity * 2;
-    printf("Word capacity reached - current = %i, new  = %i\n", pWord->capacity, newCapacity);
+    // printf("Word capacity reached - current = %i, new  = %i\n", pWord->capacity, newCapacity);
 
     char * newDataArr = (char *)malloc(sizeof(char) * newCapacity);
 
@@ -97,6 +97,8 @@ void word_append_char(WORD hWord, char charToAppend) {
   pWord->data[idxOfNewItem] = charToAppend;
 } 
 
+// TODO: implement trim() and trim every once in a while!
+// e.g. if word capacity is 2x length, we should trim
 void word_pop_char(WORD hWord) {
   Word* pWord = (Word*)hWord;
   // if length is already 0, this is a no-op

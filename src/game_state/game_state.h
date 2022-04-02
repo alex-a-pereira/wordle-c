@@ -27,11 +27,19 @@ void game_state_on_backspace(void);
 // user presses "enter" -> add current guess to word bank if able to
 void game_state_on_submit(void);
 
+void game_state_handle_key_press(char inputChar);
+
 /**
  * GETTERS
  */
 
+// TODO: think of a smoother way to return info to the UI
+
 char get_current_guess_char(int idx);
+// getter used to print chars of previous guesses
+int get_previous_guesses_len(void);
+int get_len_of_previous_guess(int previousGuessIdx);
+char get_previous_guess_char(int previousGuessIdx, int wordIdx);
 
 /**
  * UTILS

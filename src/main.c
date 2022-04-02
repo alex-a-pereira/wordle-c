@@ -12,16 +12,8 @@ int main(int argc, char ** argv) {
   int i = 0;
 
   while (1) {
+    ui_get_input();
     print_ui();
-
-    if (i % 2 == 0) {
-      game_state_on_char_press('a');
-    }
-
-    i++;
-    if (i == 30) { i = 0; }
-
-    sleep(1);
   }
 
   // TODO: sigint handler
