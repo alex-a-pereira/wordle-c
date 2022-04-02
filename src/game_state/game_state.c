@@ -180,6 +180,21 @@ int get_len_of_previous_guess(int previousGuessIdx) {
   return word_get_len(previousGuessAtIdx);
 }
 
+/**
+ * GAME LOGIC
+ */
+
+int previous_guess_char_was_at_correct_idx(int previousGuessIdx, int idxOfCharInWord) {
+  char charAtPreviousGuess = get_previous_guess_char(previousGuessIdx, idxOfCharInWord);
+  char chosenWordToGuessAtIdx = word_at_idx(globalGameState.chosenWordToGuess, idxOfCharInWord);
+  return charAtPreviousGuess == chosenWordToGuessAtIdx;
+}
+
+int previous_guess_char_was_in_word(int previousGuessIdx, int idxOfCharInWord) {
+  char charAtPreviousGuess = get_previous_guess_char(previousGuessIdx, idxOfCharInWord);
+  return word_includes(globalGameState.chosenWordToGuess, charAtPreviousGuess);
+}
+
 //
 // UTILS
 //

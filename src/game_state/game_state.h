@@ -42,6 +42,14 @@ int get_len_of_previous_guess(int previousGuessIdx);
 char get_previous_guess_char(int previousGuessIdx, int idxOfCharInWord);
 
 /**
+ * GAME LOGIC
+ */
+
+// TODO: boolean
+int previous_guess_char_was_at_correct_idx(int previousGuessIdx, int idxOfCharInWord);
+int previous_guess_char_was_in_word(int previousGuessIdx, int idxOfCharInWord);
+
+/**
  * UTILS
  */
 
