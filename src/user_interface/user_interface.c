@@ -67,7 +67,8 @@ void print_previous_guesses(void) {
 
 void ui_get_input (void) {
   char c = getch();
-  if (c) {
+
+  if (c != ERR) {
     game_state_handle_key_press(c);
   }
 }

@@ -137,8 +137,9 @@ void game_state_handle_key_press(char inputChar) {
     game_state_on_submit();
   }
 
-  // backspace is an 8, take my word for it
-  if (inputChar == 8) {
+  // TODO: handle backspace chars better? backspace comes through as 127 even tho it should be 8
+  // maybe because of my shell? (tmux -> zsh on OSX). Investigate this
+  if (inputChar == 8 || inputChar == 127) {
     game_state_on_backspace();
   }
 
