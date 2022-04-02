@@ -8,6 +8,10 @@ typedef struct _gameState {
   WORD_VECTOR alreadyGuessedWords;
   // what is the user currently doing?
   WORD currentGuessWord;
+  // LOG BOX MESSAGE
+  WORD logBoxMessage;
+  time_t logBoxMessageStartTime;
+  int logBoxMessageTimeoutSeconds;
 } GameState;
 
 GameState globalGameState;
@@ -18,10 +22,16 @@ GameState globalGameState;
 
 void game_state_init(void) {
   globalGameState.maxNumGuesses = 6;
-  globalGameState.chosenWordToGuess = select_random_word();
+  // globalGameState.chosenWordToGuess = select_random_word();
+  // while developing, just return a known value
+  globalGameState.chosenWordToGuess = word_init_from_c_string("AUDIO");
   globalGameState.alreadyGuessedWords = word_vector_init_default();
   globalGameState.alreadyGuessedChars = word_init_default();
   globalGameState.currentGuessWord = word_init_default();
+  // log box
+  globalGameState.logBoxMessage = "";
+  globalGameState.logBoxMessageStartTime = time(NULL);
+  globalGameState.logBoxMessageTimeoutSeconds = 0;
 }
 
 void game_state_destroy(void) {
@@ -34,6 +44,29 @@ void game_state_destroy(void) {
   // free WORD_VECTORs in state
   word_vector_free_from_memory(&globalGameState.alreadyGuessedWords);
   // set the pointer to NULL to avoid junk value
+}
+
+/**
+ * LOG BOX
+ * TODO: this entire section is insanely succeptible to memory leaks
+ */
+
+// Add a c string to the log box
+void set_log_box_message(char * logMessage, int timeoutSeconds) {
+  globalGameState.logBoxMessage = logMessage;
+  globalGameState.logBoxMessageStartTime = time(NULL);
+  globalGameState.logBoxMessageTimeoutSeconds = timeoutSeconds;
+}
+
+char* get_log_box_message(void) {
+  time_t now = time(NULL);
+  long secondsSinceLogStart = now - globalGameState.logBoxMessageStartTime;
+
+  if (secondsSinceLogStart > globalGameState.logBoxMessageTimeoutSeconds) {
+    return "";
+  }
+
+  return globalGameState.logBoxMessage;
 }
 
 /**
@@ -130,6 +163,8 @@ void game_state_on_submit(void) {
   // it's safe to modify globalGameState.currentGuessWord pointer
   // as described above
   reset_current_guess_word();
+
+  set_log_box_message("YOU HAVE SUBMITTED", 3);
 }
 
 void game_state_handle_key_press(char inputChar) {

@@ -2,6 +2,8 @@
 #define GAME_STATE_H
 
 #include <stdlib.h>
+#include <time.h>
+
 #include "../lib/data_types/word/word.h"
 #include "../lib/data_types/word_vector/word_vector.h"
 #include "../lib/word_bank/word_bank.h"
@@ -15,6 +17,13 @@ typedef void* GAME_STATE;
 // init/memory management
 void game_state_init(void);
 void game_state_destroy(void);
+
+/**
+ * LOG BOX
+ */
+
+void set_log_box_message(char * logMessage, int timeoutSeconds);
+char* get_log_box_message(void);
 
 /**
  * USER INPUT HANDLERS

@@ -65,6 +65,14 @@ void print_previous_guesses(void) {
   // no need to print a newline after ALL words have been printed!
 }
 
+void print_logbox_message(void) {
+  printw("\n");
+  printw("-------------------------------------\n");
+  char* logBoxMessage = get_log_box_message();
+  printw("%s", logBoxMessage);
+  printw("\n-------------------------------------\n");
+}
+
 void ui_get_input (void) {
   char c = getch();
 
@@ -86,5 +94,6 @@ void print_ui(void) {
   erase();
   print_previous_guesses();
   print_current_guess();
+  print_logbox_message();
   refresh();
 }
