@@ -132,6 +132,54 @@ void game_state_on_submit(void) {
   reset_current_guess_word();
 }
 
+void game_state_handle_key_press(char inputChar) {
+  if (inputChar == '\n' || inputChar == '\r') {
+    game_state_on_submit();
+  }
+
+  // backspace is an 8, take my word for it
+  if (inputChar == 8) {
+    game_state_on_backspace();
+  }
+
+  // handles all validation and no-ops if out of range
+  game_state_on_char_press(inputChar);
+}
+
+//
+// GETTERS
+//
+
+char get_current_guess_char(int idx) {
+  int curLen = word_get_len(globalGameState.currentGuessWord);
+  if (idx > curLen - 1) { return '\0'; }
+  return word_at_idx(globalGameState.currentGuessWord, idx);
+}
+
+char get_previous_guess_char(int previousGuessIdx, int wordIdx) {
+  int lenOfPreviousGuesses = word_vector_get_length(globalGameState.alreadyGuessedWords);
+  if (previousGuessIdx > lenOfPreviousGuesses - 1) { return '\0'; }
+
+  WORD previousGuessAtIdx = word_vector_at(globalGameState.alreadyGuessedWords, previousGuessIdx);
+  int lenOfPreviousGuessWord = word_get_len(previousGuessAtIdx);
+  if (wordIdx > lenOfPreviousGuessWord - 1) { return '\0'; }
+
+  return word_at_idx(previousGuessAtIdx, wordIdx);
+}
+
+int get_previous_guesses_len(void) {
+  return word_vector_get_length(globalGameState.alreadyGuessedWords);
+}
+
+// TODO: should we really no-op here if out of range?
+int get_len_of_previous_guess(int previousGuessIdx) {
+  int lenOfPreviousGuesses = word_vector_get_length(globalGameState.alreadyGuessedWords);
+  if (previousGuessIdx > lenOfPreviousGuesses - 1) { return 0; }
+
+  WORD previousGuessAtIdx = word_vector_at(globalGameState.alreadyGuessedWords, previousGuessIdx);
+  return word_get_len(previousGuessAtIdx);
+}
+
 //
 // UTILS
 //
