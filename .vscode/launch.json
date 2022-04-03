@@ -9,11 +9,10 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/play_wordle__debug",
-      "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
-      "externalConsole": false, // set to true to see output in cmd instead
+      "externalConsole": true, // set to true to see output in cmd instead
       "MIMode": "lldb",
       "preLaunchTask": "make-debug-main"
     }

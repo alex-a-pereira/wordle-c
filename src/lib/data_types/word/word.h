@@ -4,14 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Word struct is only used by implementation so it's defined at top of word.c
-// It's added in comments here for convenience of those working on word implementation files
-// typedef struct _word {
-//   int length;
-//   int capacity;
-//   char * data;
-// } Word;
-
 // all consumers interact with a void ptr to set up strong boundaries between modules
 typedef void* WORD;
 
@@ -28,6 +20,8 @@ void word_pop_char(WORD hWord);
 // TODO: boolean
 int word_includes(WORD hWord, char c);
 char word_at_idx(WORD hWord, int idx);
+// TODO: boolean
+int word_eq_other_word(WORD hWord1, WORD hWord2);
 
 // getters
 int word_get_len(WORD hWord);
