@@ -10,10 +10,12 @@ void init_ui(void) {
   noecho();
   curs_set(0);
   start_color();
-  init_pair(1, COLOR_WHITE, BACKGROUND_COLOR);
-  // 
-  init_pair(GREEN_COLOR_PAIR_ATTR, COLOR_GREEN, BACKGROUND_COLOR);
-  init_pair(YELLOW_COLOR_PAIR_ATTR, COLOR_YELLOW, BACKGROUND_COLOR);
+  // normal is black background, white letters
+  init_pair(1, COLOR_WHITE, 0);
+  // "corect guesses" are green background, black letters
+  init_pair(GREEN_COLOR_PAIR_ATTR, COLOR_BLACK, COLOR_GREEN);
+  // "partially correct guesses" are yellow background, black letters
+  init_pair(YELLOW_COLOR_PAIR_ATTR, COLOR_BLACK, COLOR_YELLOW);
 }
 
 void destroy_ui(void) {

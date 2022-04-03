@@ -31,8 +31,7 @@ void game_state_init(void) {
   globalGameState.allValidWords = parse_word_bank_into_vector();
   // 
   globalGameState.maxNumGuesses = 6;
-  // globalGameState.chosenWordToGuess = select_random_word(globalGameState.allValidWords);
-  globalGameState.chosenWordToGuess = word_init_from_c_string("AUDIO");
+  globalGameState.chosenWordToGuess = select_random_word(globalGameState.allValidWords);
   globalGameState.alreadyGuessedWords = word_vector_init_default();
   globalGameState.alreadyGuessedChars = word_init_default();
   globalGameState.currentGuessWord = word_init_default();
