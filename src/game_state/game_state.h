@@ -49,6 +49,10 @@ char get_current_guess_char(int idx);
 int get_previous_guesses_len(void);
 int get_len_of_previous_guess(int previousGuessIdx);
 char get_previous_guess_char(int previousGuessIdx, int idxOfCharInWord);
+// getters used to determine game status
+// TODO: boolean
+int get_is_game_over(void);
+int get_is_game_victory(void);
 
 /**
  * GAME LOGIC
