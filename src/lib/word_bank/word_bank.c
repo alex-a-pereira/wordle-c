@@ -1,6 +1,6 @@
 #include "word_bank.h"
 
-WORD_VECTOR parse_word_bank_into_vector(void) {
+WORD_BANK parse_word_bank_into_vector(void) {
   WORD_VECTOR allWordsVector = word_vector_init_default();
 
   char charFromFile;
@@ -36,8 +36,29 @@ WORD_VECTOR parse_word_bank_into_vector(void) {
   return allWordsVector;
 }
 
-WORD select_random_word(void) {
-  WORD_VECTOR allWords = parse_word_bank_into_vector();
+int word_bank_get_length(WORD_BANK hWordBank) {
+  WORD_VECTOR allWords = (WORD_VECTOR)hWordBank;
+  return word_vector_get_length(allWords);
+}
+
+// TODO: (maybe) can implement caching here for duplicate guesses??
+// probably not worth it, data set is small
+int word_bank_includes_word(WORD_BANK hWordBank, WORD hWord) {
+  WORD_VECTOR allWords = (WORD_VECTOR)hWordBank;
+  int numWordsInBank = word_bank_get_length(hWordBank);
+  for (int i = 0; i < numWordsInBank; i++) {
+    int isValid = word_eq_other_word(hWord, word_vector_at(allWords, i));
+    if (isValid) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
+WORD select_random_word(WORD_BANK hWordBank) {
+  WORD_VECTOR allWords = (WORD_VECTOR)hWordBank;
+
   WORD selectedWord = NULL;
   WORD selectedWordCopy = NULL;
 
@@ -48,8 +69,9 @@ WORD select_random_word(void) {
   selectedWord = word_vector_at(allWords, randIdx);
   // copy into a new pointer so we can free the vector safely
   selectedWordCopy = word_init_copy_from_other_word(selectedWord);
-  // cleanup the temp vector
-  word_vector_free_from_memory(&allWords);
+  // TODO: since WORD_BANK now needs to live for the entire runtime
+  // we need to figure out a better way to clean up memory
+  // word_vector_free_from_memory(&allWords);
 
   return selectedWordCopy;
 }

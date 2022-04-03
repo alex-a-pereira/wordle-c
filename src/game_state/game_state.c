@@ -1,6 +1,8 @@
 #include "game_state.h"
 
 typedef struct _gameState {
+  // the word bank
+  WORD_BANK allValidWords;
   int maxNumGuesses;
   WORD alreadyGuessedChars;
   // the random word that the user should guess
@@ -24,9 +26,12 @@ GameState globalGameState;
 //
 
 void game_state_init(void) {
+  // parse all words into game_state
+  // TODO: need to do memory cleanup on this guy!
+  globalGameState.allValidWords = parse_word_bank_into_vector();
+  // 
   globalGameState.maxNumGuesses = 6;
-  // globalGameState.chosenWordToGuess = select_random_word();
-  // while developing, just return a known value
+  // globalGameState.chosenWordToGuess = select_random_word(globalGameState.allValidWords);
   globalGameState.chosenWordToGuess = word_init_from_c_string("AUDIO");
   globalGameState.alreadyGuessedWords = word_vector_init_default();
   globalGameState.alreadyGuessedChars = word_init_default();
@@ -105,6 +110,10 @@ int get_num_guesses_taken(void) {
   return word_vector_get_length(globalGameState.alreadyGuessedWords);
 }
 
+int get_is_current_guess_valid_word(void) {
+  return word_bank_includes_word(globalGameState.allValidWords, globalGameState.currentGuessWord);
+}
+
 // NOTE: the implementation doesn't account for "if already guessed, dont add it"
 // so there will be duplicates in alreadyGuessedChars, e.g. if user submits `audio` and
 // then `raids`, already guessed chars will be `audioraids`. This is OK performance wise
@@ -173,6 +182,12 @@ void game_state_on_backspace(void) {
 void game_state_on_submit(void) {
   int lenOfCurrentWord = word_get_len(globalGameState.currentGuessWord);
   if (lenOfCurrentWord != 5) {
+    return;
+  }
+
+  int isValidWord = get_is_current_guess_valid_word();
+  if (!isValidWord) {
+    set_log_box_message("Current guess is not in word bank!", 2);
     return;
   }
 
