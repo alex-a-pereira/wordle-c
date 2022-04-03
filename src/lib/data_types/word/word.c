@@ -115,6 +115,23 @@ int word_includes(WORD hWord, char c) {
   return 0;
 }
 
+int word_eq_other_word(WORD hWord1, WORD hWord2) {
+  Word* pWord1 = (Word*)hWord1;
+  Word* pWord2 = (Word*)hWord2;
+
+  if (pWord1->length != pWord2->length) { return 0; }
+
+  int allCharsMatch = 1;
+  for (int i = 0; i < pWord1->length; i++) {
+    if (pWord1->data[i] != pWord2->data[i]) {
+      allCharsMatch = 0;
+      break;
+    }
+  }
+
+  return allCharsMatch;
+}
+
 // TODO: safe access? or just allow segfault? lol
 char word_at_idx(WORD hWord, int idx) {
   Word* pWord = (Word*)hWord;

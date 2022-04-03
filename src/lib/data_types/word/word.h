@@ -28,6 +28,8 @@ void word_pop_char(WORD hWord);
 // TODO: boolean
 int word_includes(WORD hWord, char c);
 char word_at_idx(WORD hWord, int idx);
+// TODO: boolean
+int word_eq_other_word(WORD hWord1, WORD hWord2);
 
 // getters
 int word_get_len(WORD hWord);
