@@ -68,7 +68,19 @@ void print_previous_guesses(void) {
 void print_logbox_message(void) {
   printw("\n");
   printw("-------------------------------------\n");
-  char* logBoxMessage = get_log_box_message();
+
+  char* logBoxMessage;
+
+  if (get_is_game_over()) {
+    if (get_is_game_victory()) {
+      logBoxMessage = "VICTORY!";
+    } else {
+      logBoxMessage = "FAILURE!";
+    }
+  } else {
+    logBoxMessage = get_log_box_message();
+  }
+
   printw("%s", logBoxMessage);
   printw("\n-------------------------------------\n");
 }
@@ -82,12 +94,16 @@ void ui_get_input (void) {
 }
 
 void print_current_guess(void) {
+  if (get_is_game_over()) {
+    return;
+  }
+
+  // if game isn't over, display current guess (or `_` chars if not yet complete)
   for (int i = 0; i < 5; i++) {
     char guessChar = get_current_guess_char(i);
     char charToPrint = guessChar != '\0' ? guessChar : '_';
     printw("%c", charToPrint);
   }
-  printw("\n");
 }
 
 void print_ui(void) {
