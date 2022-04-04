@@ -271,6 +271,56 @@ int get_is_game_victory(void) {
   return globalGameState.isVictory;
 }
 
+CHAR_GUESS_STATUS get_char_guess_status(char c) {
+  // since we optomistically iterate forward, this is used as a "default"
+  // if no condition to return early is true.
+  // initialized to CHAR_NOT_IN_WORD so if no conditions in loop are met, we return correct val.
+  // It might get re-assigned later to CHAR_IN_WORD_WRONG_IDX
+  CHAR_GUESS_STATUS status = CHAR_NOT_IN_WORD;
+
+  // TODO: bool
+  int hasAlreadyGuessed = word_includes(globalGameState.alreadyGuessedChars, c);
+  if (!hasAlreadyGuessed) {
+    return NOT_YET_GUESSED;
+  }
+
+  /**
+   *  iterate over every word (returns early if a perfect match is found).
+   *   We optomistically iterate through every guessed char to see if there's
+   *     a BETTER match in subsequent guesses, e.g.
+   *   - actual word: "AUDIO"
+   *   - guess1: "BREAK" -> resolves to CHAR_IN_WORD_WRONG_IDX
+   *   - guess2: "ALTER" -> resolves to CHAR_IN_WORD_CORRECT_IDX
+   */
+  int numGuesses = get_previous_guesses_len();
+  for (int idxOfGuessWord = 0; idxOfGuessWord < numGuesses; idxOfGuessWord++) {
+    // iterate over every char in each word
+    int currWordToPrintLen = get_len_of_previous_guess(idxOfGuessWord);
+    for (int idxOfCharInWord = 0; idxOfCharInWord < currWordToPrintLen; idxOfCharInWord++) {
+      // we can skip logic below if we haven't guessed it yet
+      char prevGuessChar = get_previous_guess_char(idxOfGuessWord, idxOfCharInWord);
+      if (prevGuessChar != c) {
+        continue;
+      }
+
+      int charInPreviousGuessAtCorrectIdx = previous_guess_char_was_at_correct_idx(idxOfGuessWord, idxOfCharInWord);
+
+      // can return early if best possible case is true
+      if (charInPreviousGuessAtCorrectIdx) {
+        return CHAR_IN_WORD_CORRECT_IDX;
+      }
+
+      // CAN'T return early if this status is 
+      int charInPreviousGuessWasInWord = previous_guess_char_was_in_word(idxOfGuessWord, idxOfCharInWord);
+      if (charInPreviousGuessWasInWord) {
+        status = CHAR_IN_WORD_WRONG_IDX;
+      }
+    }
+  }
+
+  return status;
+}
+
 /**
  * GAME LOGIC
  */

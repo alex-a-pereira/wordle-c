@@ -3,6 +3,7 @@
 #define BACKGROUND_COLOR 0
 #define GREEN_COLOR_PAIR_ATTR 2
 #define YELLOW_COLOR_PAIR_ATTR 3
+#define RED_COLOR_PAIR 4
 
 void init_ui(void) {
   initscr();			/* Start curses mode 		  */
@@ -16,6 +17,8 @@ void init_ui(void) {
   init_pair(GREEN_COLOR_PAIR_ATTR, COLOR_BLACK, COLOR_GREEN);
   // "partially correct guesses" are yellow background, black letters
   init_pair(YELLOW_COLOR_PAIR_ATTR, COLOR_BLACK, COLOR_YELLOW);
+  // "already guessed chars that are not in word" are red out
+  init_pair(RED_COLOR_PAIR, COLOR_BLACK, COLOR_RED);
 }
 
 void destroy_ui(void) {
@@ -32,6 +35,32 @@ void print_yellow_char(char c) {
   attron(COLOR_PAIR(YELLOW_COLOR_PAIR_ATTR));
   printw("%c", c);
   attroff(COLOR_PAIR(YELLOW_COLOR_PAIR_ATTR));
+}
+
+void print_red_char(char c) {
+  attron(COLOR_PAIR(RED_COLOR_PAIR));
+  printw("%c", c);
+  attroff(COLOR_PAIR(RED_COLOR_PAIR));
+}
+
+void print_char_at_correct_color(char c) {
+  CHAR_GUESS_STATUS statusOfChar = get_char_guess_status(c);
+
+  switch (statusOfChar) {
+    case CHAR_IN_WORD_CORRECT_IDX:
+      print_green_char(c);
+      break;
+    case CHAR_IN_WORD_WRONG_IDX:
+      print_yellow_char(c);
+      break;
+    case CHAR_NOT_IN_WORD:
+      print_red_char(c);
+      break;
+    // NOT YET GUESSED
+    default:
+      printw("%c", c);
+      break;
+  }
 }
 
 void print_previous_guesses(void) {
@@ -65,6 +94,19 @@ void print_previous_guesses(void) {
     printw("\n");
   }
   // no need to print a newline after ALL words have been printed!
+}
+
+void print_char_bank(void) {
+  printw("\n");
+
+  char* charsToPrint = "QWERTYUIOPASDFGHJKLZXCVBNM"; // qwerty :)
+  for (int i = 0; i < 26; i++) {
+    char c = charsToPrint[i];
+    print_char_at_correct_color(c);
+    if (c == 'P' || c == 'L' || c == 'M') {
+      printw("\n");
+    }
+  }
 }
 
 void print_logbox_message(void) {
@@ -106,12 +148,14 @@ void print_current_guess(void) {
     char charToPrint = guessChar != '\0' ? guessChar : '_';
     printw("%c", charToPrint);
   }
+  printw("\n");
 }
 
 void print_ui(void) {
   erase();
   print_previous_guesses();
   print_current_guess();
+  print_char_bank();
   print_logbox_message();
   refresh();
 }
