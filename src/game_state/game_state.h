@@ -38,6 +38,13 @@ void game_state_on_submit(void);
 
 void game_state_handle_key_press(char inputChar);
 
+typedef enum _CHAR_GUESS_STATUS {
+  NOT_YET_GUESSED,
+  CHAR_NOT_IN_WORD,
+  CHAR_IN_WORD_WRONG_IDX,
+  CHAR_IN_WORD_CORRECT_IDX
+} CHAR_GUESS_STATUS;
+
 /**
  * GETTERS
  */
@@ -45,6 +52,7 @@ void game_state_handle_key_press(char inputChar);
 // TODO: think of a smoother way to return info to the UI
 
 char get_current_guess_char(int idx);
+int get_max_num_guesses(void);
 // getter used to print chars of previous guesses
 int get_previous_guesses_len(void);
 int get_len_of_previous_guess(int previousGuessIdx);
@@ -53,6 +61,7 @@ char get_previous_guess_char(int previousGuessIdx, int idxOfCharInWord);
 // TODO: boolean
 int get_is_game_over(void);
 int get_is_game_victory(void);
+CHAR_GUESS_STATUS get_char_guess_status(char c);
 
 /**
  * GAME LOGIC

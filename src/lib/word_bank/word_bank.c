@@ -65,6 +65,10 @@ WORD select_random_word(WORD_BANK hWordBank) {
   // get random selection
   int minIdx = 0;
   int maxIdx = word_vector_get_length(allWords);
+
+  time_t t;
+  srand((unsigned) time(&t));
+
   int randIdx = (rand() % (maxIdx - minIdx + 1)) + 1;
   selectedWord = word_vector_at(allWords, randIdx);
   // copy into a new pointer so we can free the vector safely
