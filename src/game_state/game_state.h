@@ -52,6 +52,7 @@ typedef enum _CHAR_GUESS_STATUS {
 // TODO: think of a smoother way to return info to the UI
 
 char get_current_guess_char(int idx);
+int get_max_num_guesses(void);
 // getter used to print chars of previous guesses
 int get_previous_guesses_len(void);
 int get_len_of_previous_guess(int previousGuessIdx);

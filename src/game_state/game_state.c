@@ -239,6 +239,10 @@ char get_current_guess_char(int idx) {
   return word_at_idx(globalGameState.currentGuessWord, idx);
 }
 
+int get_max_num_guesses(void) {
+  return globalGameState.maxNumGuesses;
+}
+
 char get_previous_guess_char(int previousGuessIdx, int idxOfCharInWord) {
   int lenOfPreviousGuesses = word_vector_get_length(globalGameState.alreadyGuessedWords);
   if (previousGuessIdx > lenOfPreviousGuesses - 1) { return '\0'; }

@@ -96,6 +96,17 @@ void print_previous_guesses(void) {
   // no need to print a newline after ALL words have been printed!
 }
 
+void print_future_guess_lines(void) {
+  int numGuessesAlreadyTaken = get_previous_guesses_len();
+  int totalNumGuesses = get_max_num_guesses();
+  // the `- 1` is because we need to subtract a line the current guess as well
+  int numFutureGuessesToPrint = totalNumGuesses - numGuessesAlreadyTaken - 1;
+  for (int r = 0; r < numFutureGuessesToPrint; r++) {
+    // TODO: constant for word length
+    printw("*****\n");
+  }
+}
+
 void print_char_bank(void) {
   printw("\n");
 
@@ -155,13 +166,14 @@ void print_current_guess(void) {
     char charToPrint = guessChar != '\0' ? guessChar : '_';
     printw("%c", charToPrint);
   }
-  printw("\n");
+  printw(" <-\n");
 }
 
 void print_ui(void) {
   erase();
   print_previous_guesses();
   print_current_guess();
+  print_future_guess_lines();
   print_char_bank();
   print_logbox_message();
   refresh();
