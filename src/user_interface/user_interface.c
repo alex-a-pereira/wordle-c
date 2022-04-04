@@ -103,7 +103,14 @@ void print_char_bank(void) {
   for (int i = 0; i < 26; i++) {
     char c = charsToPrint[i];
     print_char_at_correct_color(c);
-    if (c == 'P' || c == 'L' || c == 'M') {
+    // space between each letter
+    printw(" ");
+    // newline for new keyboard row, shift over using spaces so it looks like a real keyboard
+    if (c == 'P') {
+      printw("\n ");
+    } else if (c == 'L') {
+      printw("\n  ");
+    } else if (c == 'M') {
       printw("\n");
     }
   }
